@@ -27,7 +27,7 @@ mode = ""
 final = ""
 ans = ""
 debug = False
-ver = "2.0"
+ver = "2.1"
 
 
 print(f"""
@@ -51,17 +51,26 @@ while ans != "q":
 
     final = ""
     if ans == "e":
+        mode = ""
+        usefile = ""
+        outToFile = ""
+
         while mode.lower() not in ["e","d"]:
             mode = input("Encrypt or decrypt? [e/d] ")
         while usefile.lower() not in ["y","n"]:
             usefile = input("Would you like to use a file as input? [y/n] ")
+        while outToFile.lower() not in ["y","n"]:
+            outToFile = input("Would you like to use a file as output? [y/n] ")
         
         if usefile.lower() == "y":
             filething = input("Where is the file you would like to encrypt? ")
             rfile = open(filething,"r", encoding="utf-8")
-            fileout = input("What should the output file be called? ")
         else:
             inputstr = input("Enter text: ")
+
+        if outToFile.lower() == "y":
+            fileout = input("What should the output file be called? ")
+
         loomcode = input("loomcode (integer): ")
         # loomcode = hex(int(loomcode))
 
@@ -102,13 +111,15 @@ while ans != "q":
         if debug:
             print(final)
 
-        if usefile == "y":
+        if outToFile == "y":
             try:
                 f = open(fileout,"w", encoding="utf-8")
                 f.write(final)
                 f.close()
             except UnicodeEncodeError as err:
                 print(f"\nERROR! ({err})")
+        else:
+            print("\nOutput: "+final+"\n")
 
         print("Finished!")
     # elif ans == "c":
